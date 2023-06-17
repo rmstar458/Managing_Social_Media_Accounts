@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="images/logo.jpeg" rel="icon">
+    <title>Employee's Data</title>
+  <style>
+    body{
+      margin:0%;
+      padding: 0%;
+    }
+    .nav{
+      background-color: #1D2F6F;
+      padding:0.8% 2%;
+    }
+    table {
+      margin:2%;
+      border-collapse: collapse;
+      width: auto;
+    }
+
+    th, td {
+      padding: 8px;
+      text-align: center;
+      border: 1px solid rgb(20, 16, 16);
+    }
+    img{
+      height: auto;
+      width: 9%;
+    }
+    img:hover{
+      animation-name: myanim;
+      animation-duration: 0.5s;
+      animation-fill-mode: forwards;
+    }
+    #head{
+      width:10%;
+    }
+    #head:hover{
+      animation-name: none;
+    }
+    @keyframes myanim {
+      from{
+
+      }
+      to{
+        width:12%;
+      }
+      
+    }
+  </style>
+</head>
+<body>
+  <div class="nav">
+    <img id="head" src="images/intropic.webp">
+  </div>
+    <table id="userTable">
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Intern-ID</th>
+          <th>Role</th>
+          <th>Instagram</th>
+          <th>Facebook</th>
+          <th>Linkedin</th>
+          <th>Twitter</th>
+        </tr>
+      </thead>
+      <tbody>
+        <!-- Table rows will be dynamically populated using JavaScript -->
+      </tbody>
+    </table>
+  
+    <script>
+        fetch('http://localhost:4000/details')
+      .then((response) => response.json())
+      .then((data) => {
+        const tableBody = document.querySelector('#userTable tbody');
+
+        // Iterate over the fetched data and create table rows
+        data.forEach((user) => {
+          const row = document.createElement('tr');
+          const nameCell = document.createElement('td');
+          const IdCell = document.createElement('td');
+          const RoleCell = document.createElement('td');
+
+          const InstagramCell = document.createElement('td');
+          const Instagramlink=document.createElement('a');
+          Instagramlink.href =user.instagram;
+          const Iimage = document.createElement('img');
+          Iimage.src = 'images/instagram.png';
+          Instagramlink.appendChild(Iimage);
+          Instagramlink.target='_blank';
+          InstagramCell.appendChild(Instagramlink);
+
+          const FacebookCell = document.createElement('td');
+          const Facebooklink=document.createElement('a');
+          Facebooklink.href =user.facebook;
+          const Fimage = document.createElement('img');
+          Fimage.src = 'images/facebook.png';
+          Facebooklink.appendChild(Fimage);
+          Facebooklink.target='_blank';
+          FacebookCell.appendChild(Facebooklink);
+
+          const LinkedinCell = document.createElement('td');
+          const Linkedinlink=document.createElement('a');
+          Linkedinlink.href =user.linkedin;
+          const Limage = document.createElement('img');
+          Limage.src = 'images/linkedin.png';
+          Linkedinlink.appendChild(Limage);
+          Linkedinlink.target='_blank';
+          LinkedinCell.appendChild(Linkedinlink);
+
+          const TwitterCell = document.createElement('td');
+          const Twitterlink=document.createElement('a');
+          Twitterlink.href =user.twitter;
+          const Timage = document.createElement('img');
+          Timage.src = 'images/twitter.png';
+          Twitterlink.appendChild(Timage);
+          Twitterlink.target='_blank';
+          TwitterCell.appendChild(Twitterlink);
+          
+          nameCell.textContent = user.name;
+          IdCell.textContent = user.id;
+          RoleCell.textContent = user.role;
+  
+
+          row.appendChild(nameCell);
+          row.appendChild(IdCell);
+          row.appendChild(RoleCell);
+          row.appendChild(InstagramCell);
+          row.appendChild(FacebookCell);
+          row.appendChild(LinkedinCell);
+          row.appendChild(TwitterCell);
+
+          tableBody.appendChild(row);
+        });
+      })
+      .catch((error) => {
+        console.error('Error fetching users:', error);
+      });
+  </script>
+    
+    
+</body>
+</html>
